@@ -5,9 +5,15 @@ cache:
   paths:
     - commons/
     - jvm/
+    - common.tar.gz
+    - jvm.tar.gz
 
 before_script:
   - mvn clean
+  - cp /data/common.tar.gz
+  - cp /data/jvm.tar.gz
+  - tar -zxf common.tar.gz
+  - tar -zxf jvm.tar.gz 
 
 build:
   stage: build
