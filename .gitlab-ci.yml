@@ -1,0 +1,15 @@
+stages:
+  - build
+
+cache:
+  paths:
+    - commons/
+    - jvm/
+
+before_script:
+  - mvn clean
+
+build:
+  stage: build
+  script:
+    - mvn install
