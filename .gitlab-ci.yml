@@ -10,8 +10,8 @@ cache:
 
 before_script:
   - mvn clean
-  - cp /data/common.tar.gz
-  - cp /data/jvm.tar.gz
+  - cp /data/common.tar.gz .
+  - cp /data/jvm.tar.gz .
   - tar -zxf common.tar.gz
   - tar -zxf jvm.tar.gz 
 
