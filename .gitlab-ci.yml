@@ -18,4 +18,5 @@ before_script:
 build:
   stage: build
   script:
+    - mvn clean
     - mvn install
