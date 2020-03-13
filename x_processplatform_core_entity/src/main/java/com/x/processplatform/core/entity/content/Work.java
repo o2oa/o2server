@@ -1,5 +1,6 @@
 package com.x.processplatform.core.entity.content;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -132,12 +133,13 @@ public class Work extends SliceJpaObject implements ProjectionInterface {
 
 	public void setManualTaskIdentityList(List<String> manualTaskIdentityList) {
 		this.manualTaskIdentityList = manualTaskIdentityList;
-		if (ListTools.isEmpty(this.manualTaskIdentityList)) {
+		if (ListTools.isEmpty(manualTaskIdentityList)) {
 			this.manualTaskIdentityText = "";
 		} else {
 			String text = StringUtils.join(OrganizationDefinition.name(manualTaskIdentityList), ",");
 			text = StringTools.utf8SubString(text, length_255B);
 			this.setManualTaskIdentityText(text);
+			// this.manualTaskIdentityText = text;
 		}
 	}
 
@@ -359,6 +361,7 @@ public class Work extends SliceJpaObject implements ProjectionInterface {
 	@ElementIndex(name = TABLE + IndexNameMiddle + manualTaskIdentityList_FIELDNAME + ElementIndexNameSuffix)
 	@CheckPersist(allowEmpty = true)
 	private List<String> manualTaskIdentityList;
+	// private List<String> manualTaskIdentityList = new ArrayList<>();
 
 	public static final String manualTaskIdentityText_FIELDNAME = "manualTaskIdentityText";
 	@FieldDescribe("当前处理人身份合并文本,用','分割,超长截断,此字段仅用于显示当前工作的处理人,不索引.")

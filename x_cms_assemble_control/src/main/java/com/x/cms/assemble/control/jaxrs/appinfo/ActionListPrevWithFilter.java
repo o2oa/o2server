@@ -87,16 +87,6 @@ public class ActionListPrevWithFilter extends BaseAction {
 
 		@FieldDescribe("文档类型：全部 | 信息 | 数据")
 		private String documentType = "信息";
-		
-		private Long rank;
-
-		public Long getRank() {
-			return rank;
-		}
-
-		public void setRank(Long rank) {
-			this.rank = rank;
-		} 
 
 		public List<String> getAppIdList() {
 			return appIdList;

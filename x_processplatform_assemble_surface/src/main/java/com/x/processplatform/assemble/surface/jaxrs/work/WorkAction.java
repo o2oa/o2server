@@ -257,23 +257,23 @@ public class WorkAction extends StandardJaxrsAction {
 		asyncResponse.resume(ResponseFactory.getEntityTagActionResultResponse(request, result));
 	}
 
-	@JaxrsMethodDescribe(value = "检查是否要删除处于草稿状态的工作,没有保存过任何数据将被认为是草稿,需要应用管理权限或者是工作的创建者。", action = ActionCheckDraft.class)
-	@DELETE
-	@Path("{id}/check/draft")
-	@Produces(HttpMediaType.APPLICATION_JSON_UTF_8)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void checkDraft(@Suspended final AsyncResponse asyncResponse, @Context HttpServletRequest request,
-			@JaxrsParameterDescribe("工作标识") @PathParam("id") String id) {
-		ActionResult<ActionCheckDraft.Wo> result = new ActionResult<>();
-		EffectivePerson effectivePerson = this.effectivePerson(request);
-		try {
-			result = new ActionCheckDraft().execute(effectivePerson, id);
-		} catch (Exception e) {
-			logger.error(e, effectivePerson, request, null);
-			result.error(e);
-		}
-		asyncResponse.resume(ResponseFactory.getEntityTagActionResultResponse(request, result));
-	}
+//	@JaxrsMethodDescribe(value = "检查是否要删除处于草稿状态的工作,没有保存过任何数据将被认为是草稿,需要应用管理权限或者是工作的创建者。", action = ActionCheckDraft.class)
+//	@DELETE
+//	@Path("{id}/check/draft")
+//	@Produces(HttpMediaType.APPLICATION_JSON_UTF_8)
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public void checkDraft(@Suspended final AsyncResponse asyncResponse, @Context HttpServletRequest request,
+//			@JaxrsParameterDescribe("工作标识") @PathParam("id") String id) {
+//		ActionResult<ActionCheckDraft.Wo> result = new ActionResult<>();
+//		EffectivePerson effectivePerson = this.effectivePerson(request);
+//		try {
+//			result = new ActionCheckDraft().execute(effectivePerson, id);
+//		} catch (Exception e) {
+//			logger.error(e, effectivePerson, request, null);
+//			result.error(e);
+//		}
+//		asyncResponse.resume(ResponseFactory.getEntityTagActionResultResponse(request, result));
+//	}
 
 	@JaxrsMethodDescribe(value = "完成工作关闭时候的检查,1.检查是否要删除处于草稿状态的工作,没有保存过任何数据将被认为是草稿.2.检查是否需要释放抢办.", action = ActionCloseCheck.class)
 	@GET
@@ -281,6 +281,24 @@ public class WorkAction extends StandardJaxrsAction {
 	@Produces(HttpMediaType.APPLICATION_JSON_UTF_8)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void closeCheck(@Suspended final AsyncResponse asyncResponse, @Context HttpServletRequest request,
+			@JaxrsParameterDescribe("工作标识") @PathParam("id") String id) {
+		ActionResult<ActionCloseCheck.Wo> result = new ActionResult<>();
+		EffectivePerson effectivePerson = this.effectivePerson(request);
+		try {
+			result = new ActionCloseCheck().execute(effectivePerson, id);
+		} catch (Exception e) {
+			logger.error(e, effectivePerson, request, null);
+			result.error(e);
+		}
+		asyncResponse.resume(ResponseFactory.getEntityTagActionResultResponse(request, result));
+	}
+
+	@JaxrsMethodDescribe(value = "完成工作关闭时候的检查,1.检查是否要删除处于草稿状态的工作,没有保存过任何数据将被认为是草稿.2.检查是否需要释放抢办.为了支持信标方法(Navigator.sendBeacon())单独增加的方法.", action = ActionCloseCheck.class)
+	@POST
+	@Path("{id}/close/check")
+	@Produces(HttpMediaType.APPLICATION_JSON_UTF_8)
+	// @Consumes(MediaType.APPLICATION_JSON)
+	public void closeCheckPost(@Suspended final AsyncResponse asyncResponse, @Context HttpServletRequest request,
 			@JaxrsParameterDescribe("工作标识") @PathParam("id") String id) {
 		ActionResult<ActionCloseCheck.Wo> result = new ActionResult<>();
 		EffectivePerson effectivePerson = this.effectivePerson(request);
